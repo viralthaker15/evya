@@ -93,7 +93,7 @@ router.get("/:id", async (req, res, next) => {
   } catch (e) {
     // ofcourse on production level code error handling is handled more gracefully and with more info
     // but for this project purpose we can handle in simple try catch block
-    console.error("Error deleting user:", e);
+    console.error("Error fetching user:", e);
     res
       .status(500)
       .json({ message: "Internal Server Error", error: e.message });

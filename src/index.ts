@@ -16,8 +16,6 @@ export async function initializeDatabaseConnection() {
   return dataSource;
 }
 
-initializeDatabaseConnection();
-
 // Middlewares
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -39,6 +37,7 @@ app.get("/ping", (req, res) => {
 // });
 
 const server = app.listen(port, async () => {
+  initializeDatabaseConnection();
   console.log(`Listening on ${port}: ${app.get("env")}`);
   console.log(`  Press CTRL-C to stop\n`);
 });
