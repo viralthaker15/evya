@@ -22,7 +22,8 @@ app.use("/api/members", require("./controllers/members").default);
 
 // Catch-all route to serve the frontend
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist/client/index.html"));
+  res.send("HELLO WORLD");
+  // res.sendFile(path.join(__dirname, "dist/client/index.html"));
 });
 
 const server = app.listen(port, async () => {
