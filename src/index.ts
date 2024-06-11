@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../client")));
 
 /* --- Route handlers ---  */
-app.use("/api/members", require("./controllers/members").default);
+app.use("/members", require("./controllers/members").default);
 
 app.get("/ping", (req, res) => {
   res.status(200).send("Ok !");
