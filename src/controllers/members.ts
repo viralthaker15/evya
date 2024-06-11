@@ -15,7 +15,7 @@ const userTeamRepository = dataSource.getRepository(UserTeam);
 const roleRepository = dataSource.getRepository(Role);
 
 /* === Routes === */
-router.get("", checkDBConnection, async (req, res) => {
+router.get("", async (req, res) => {
   try {
     // Pagination
     const page = parseInt(req.query.page as string) || 1;
@@ -65,10 +65,6 @@ router.get("", checkDBConnection, async (req, res) => {
 // get All Roles
 router.get("/roles", async (req, res) => {
   try {
-    if (process.env.NODE_ENV === "production") {
-      /* === Deployed on vercel (serverless function connection is not always to) */
-      await initializeDatabaseConnection();
-    }
     const roles = await roleRepository.find({});
     res.status(200).send(roles);
   } catch (error) {
@@ -82,10 +78,6 @@ router.get("/roles", async (req, res) => {
 // GET member by id
 router.get("/:id", async (req, res) => {
   try {
-    if (process.env.NODE_ENV === "production") {
-      /* === Deployed on vercel (serverless function connection is not always to) */
-      await initializeDatabaseConnection();
-    }
     const { id } = req.params;
     const queryBuilder = userRepository
       .createQueryBuilder("user")
@@ -113,10 +105,6 @@ router.get("/:id", async (req, res) => {
 // add members
 router.post("", async (req, res) => {
   try {
-    if (process.env.NODE_ENV === "production") {
-      /* === Deployed on vercel (serverless function connection is not always to) */
-      await initializeDatabaseConnection();
-    }
     const {
       userDetails: { name, email, username, avatar, roleId },
       teamName,
@@ -167,10 +155,6 @@ router.post("", async (req, res) => {
 // update members
 router.put("/:id", async (req, res) => {
   try {
-    if (process.env.NODE_ENV === "production") {
-      /* === Deployed on vercel (serverless function connection is not always to) */
-      await initializeDatabaseConnection();
-    }
     const { id } = req.params;
     const {
       name,
@@ -212,10 +196,6 @@ router.put("/:id", async (req, res) => {
 
 router.post("/delete-many", async (req, res) => {
   try {
-    if (process.env.NODE_ENV === "production") {
-      /* === Deployed on vercel (serverless function connection is not always to) */
-      await initializeDatabaseConnection();
-    }
     const { deletedUserIds } = req.body;
 
     await userTeamRepository.delete({ userId: In(deletedUserIds) });
@@ -234,10 +214,6 @@ router.post("/delete-many", async (req, res) => {
 
 // delete member
 router.delete("/:id", async (req, res) => {
-  if (process.env.NODE_ENV === "production") {
-    /* === Deployed on vercel (serverless function connection is not always to) */
-    await initializeDatabaseConnection();
-  }
   const { id } = req.params;
 
   try {

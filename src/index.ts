@@ -5,6 +5,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import { buildDataSource } from "./db";
 import cors from "cors";
+import { checkDBConnection } from "./middleware";
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -25,16 +26,12 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../client")));
 
 /* --- Route handlers ---  */
-app.use("/members", require("./controllers/members").default);
-
 app.get("/ping", (req, res) => {
   res.status(200).send("Ok !");
 });
 
-// Catch-all route to serve the frontend
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../client/index.html"));
-// });
+app.use(checkDBConnection);
+app.use("/members", require("./controllers/members").default);
 
 const server = app.listen(port, async () => {
   initializeDatabaseConnection();
