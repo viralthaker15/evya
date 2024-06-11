@@ -2,6 +2,7 @@ import express from "express";
 import { dataSource } from "../db";
 import { Role, Team, User, UserTeam } from "../models";
 import { getFormattedUser } from "./utils";
+import { In } from "typeorm";
 
 const router = express.Router();
 
@@ -192,11 +193,30 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.post("/delete-many", async (req, res) => {
+  try {
+    const { deletedUserIds } = req.body;
+
+    await userTeamRepository.delete({ userId: In(deletedUserIds) });
+    const deletedUsers = await userRepository.delete({
+      id: In(deletedUserIds),
+    });
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
+  }
+});
+
 // delete member
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
+    await userTeamRepository.delete({ userId: parseInt(id) });
     const user = await userRepository.findOneBy({ id: parseInt(id) });
 
     if (!user) {

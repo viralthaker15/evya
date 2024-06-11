@@ -10,6 +10,7 @@ interface AppContextState {
     open?: boolean;
     modalType?: "EDIT" | "DELETE";
     userMetaData?: User;
+    renderSuccess?: boolean;
   }) => void;
   modalSettings: ModalSettings;
 }
@@ -18,13 +19,14 @@ interface ModalSettings {
   open: boolean;
   modalType: "EDIT" | "DELETE";
   userMetaData: User;
+  renderSuccess: boolean;
 }
 
-const defaultUserObj = {
+export const defaultUserObj = {
   avatar: "",
   createdAt: "",
   email: "",
-  id: Math.random(),
+  id: -1,
   isActive: false,
   name: "",
   role: {
@@ -46,6 +48,7 @@ export const AppContext = createContext<AppContextState>({
     open: false,
     modalType: "EDIT",
     userMetaData: defaultUserObj,
+    renderSuccess: false,
   },
 });
 
@@ -57,6 +60,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     open: false,
     modalType: "EDIT",
     userMetaData: defaultUserObj,
+    renderSuccess: false,
   });
 
   const toggleUserSelection = (userId: number) => {
@@ -79,6 +83,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     open?: boolean;
     modalType?: "EDIT" | "DELETE";
     userMetaData?: User;
+    renderSuccess?: boolean;
   }) => {
     let newSettings = { ...modalSettings };
 
@@ -96,6 +101,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       newSettings = {
         ...newSettings,
         userMetaData: settings.userMetaData || newSettings.userMetaData,
+      };
+    if ("renderSuccess" in settings)
+      newSettings = {
+        ...newSettings,
+        renderSuccess: settings.renderSuccess || newSettings.renderSuccess,
       };
 
     setModalSettings(newSettings);

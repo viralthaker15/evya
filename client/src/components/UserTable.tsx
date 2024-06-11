@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import { getUsers, updateUser } from "../services/api";
+import { deleteUser, deleteUsers, getUsers, updateUser } from "../services/api";
 import { User } from "../models/User";
 import UserRow from "./UserRow";
 import styles from "./userTable.module.scss";
-import { AppContext } from "../contexts/AppContext";
+import { AppContext, defaultUserObj } from "../contexts/AppContext";
 import TableFooter from "./TableFooter";
 import Modal from "./modals/modal";
 import EditModal from "./modals/EditModal";
 import DeleteModal from "./modals/DeleteModal";
+import SuccessModal from "./modals/SuccessModal";
 
 const UserTable: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -15,7 +16,7 @@ const UserTable: React.FC = () => {
     selectedUsers,
     clearSelection,
     selectAll,
-    modalSettings: { open, modalType, userMetaData },
+    modalSettings: { open, modalType, userMetaData, renderSuccess },
     handleChangeModalSettings,
   } = useContext(AppContext);
   const [totalCount, setTotalCount] = useState<number | undefined>(undefined);
@@ -64,6 +65,8 @@ const UserTable: React.FC = () => {
   };
 
   const handleRenderModal = () => {
+    if (renderSuccess) return <SuccessModal />;
+
     switch (modalType) {
       case "EDIT":
         return (
@@ -73,7 +76,7 @@ const UserTable: React.FC = () => {
             onSave={async (updatedUser: User) => {
               await updateUser(updatedUser.id, updatedUser);
               await fetchUsers(currentPage);
-              handleChangeModalSettings({ open: false });
+              handleChangeModalSettings({ renderSuccess: true });
             }}
           />
         );
@@ -81,8 +84,19 @@ const UserTable: React.FC = () => {
         return (
           <DeleteModal
             users={selectedUsers}
-            onSave={() => {}}
-            onCancel={() => {}}
+            onSave={async (deletedUsers) => {
+              if (deletedUsers.length === 1) {
+                await deleteUser(deletedUsers[0]);
+              } else await deleteUsers(deletedUsers);
+              handleChangeModalSettings({ renderSuccess: true });
+              await fetchUsers(currentPage);
+            }}
+            onCancel={() =>
+              handleChangeModalSettings({
+                open: false,
+                userMetaData: defaultUserObj,
+              })
+            }
           />
         );
       default:
@@ -109,6 +123,12 @@ const UserTable: React.FC = () => {
               : "bg-violet-400 cursor-default"
           } text-white px-4 py-2 rounded-lg text-sm font-medium`}
           disabled={selectedUsers.length === 0}
+          onClick={() => {
+            handleChangeModalSettings({
+              open: true,
+              modalType: "DELETE",
+            });
+          }}
         >
           Delete Selected
         </button>

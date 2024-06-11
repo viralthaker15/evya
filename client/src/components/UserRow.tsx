@@ -34,6 +34,7 @@ const UserRow: React.FC<UserRowProps> = ({ user }) => {
     handleChangeModalSettings({
       open: true,
       modalType: "DELETE",
+      userMetaData: user,
     });
   };
 
