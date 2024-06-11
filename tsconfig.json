@@ -11,15 +11,14 @@
       "useUnknownInCatchVariables": false,
       "sourceMap": true,
       "outDir": "dist",
-      "rootDir": "./api",
       "paths": {
-        "src/*": ["./api/*"],
+        "src/*": ["./src/*"],
         "*": ["./node_modules/*", "./api/types/*"]
       },
       "forceConsistentCasingInFileNames": true,
       "skipLibCheck": true
     },
-    "include": ["./api", "./client/dist"],
+    "include": ["./src", "./api/*.ts"],
     "exclude": ["./node_modules"],
   }
   

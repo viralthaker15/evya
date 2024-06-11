@@ -7,7 +7,7 @@ import path from "path";
 export default defineConfig({
   plugins: [react(), svgr()],
   build: {
-    outDir: path.resolve(__dirname, "./dist"), // Output to server/dist/client
+    outDir: path.resolve(__dirname, "../public"), // Output to server/dist/client
   },
   resolve: {
     alias: {
