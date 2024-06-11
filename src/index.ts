@@ -9,7 +9,7 @@ import cors from "cors";
 const port = process.env.PORT || 5000;
 const app = express();
 
-async function initializeDatabaseConnection() {
+export async function initializeDatabaseConnection() {
   const dataSource = await buildDataSource();
   console.log("Database connections established.");
 
