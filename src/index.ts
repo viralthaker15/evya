@@ -25,9 +25,9 @@ app.get("/ping", (req, res) => {
 });
 
 // Catch-all route to serve the frontend
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/index.html"));
+// });
 
 const server = app.listen(port, async () => {
   console.log(`Listening on ${port}: ${app.get("env")}`);
