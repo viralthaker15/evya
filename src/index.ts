@@ -20,6 +20,10 @@ app.use(express.static(path.join(__dirname, "../client")));
 /* --- Route handlers ---  */
 app.use("/api/members", require("./controllers/members").default);
 
+app.get("/ping", (req, res) => {
+  res.status(200).send("Ok !");
+});
+
 // Catch-all route to serve the frontend
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/index.html"));
