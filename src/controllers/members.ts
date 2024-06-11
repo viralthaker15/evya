@@ -4,7 +4,7 @@ import { Role, Team, User, UserTeam } from "../models";
 import { getFormattedUser } from "./utils";
 import { In } from "typeorm";
 import { initializeDatabaseConnection } from "..";
-import { checkDBConnection } from "src/middleware";
+import { checkDBConnection } from "../middleware";
 
 const router = express.Router();
 
