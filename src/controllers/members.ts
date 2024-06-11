@@ -23,7 +23,7 @@ router.get("", async (req, res, next) => {
     const sortBy = (req.query.sortBy as string) || "createdAt";
     const order = (req.query.order as "ASC" | "DESC") || "ASC";
 
-    // Searching
+    // Searching & Filtering
     const search = req.query.search as string;
 
     const queryBuilder = userRepository.createQueryBuilder("user");
@@ -47,11 +47,28 @@ router.get("", async (req, res, next) => {
     res.status(200).json({
       items: result,
       count: total,
+      totalPages: Math.ceil(total / limit),
     });
   } catch (e) {
     // ofcourse on production level code error handling is handled more gracefully and with more info
     // but for this project purpose we can handle in simple try catch block
-    next(e);
+    console.error("Error deleting user:", e);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: e.message });
+  }
+});
+
+// get All Roles
+router.get("/roles", async (req, res, next) => {
+  try {
+    const roles = await roleRepository.find({});
+    res.status(200).send(roles);
+  } catch (error) {
+    console.error("Error fetching roles:", error);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 });
 
@@ -75,7 +92,10 @@ router.get("/:id", async (req, res, next) => {
   } catch (e) {
     // ofcourse on production level code error handling is handled more gracefully and with more info
     // but for this project purpose we can handle in simple try catch block
-    next(e);
+    console.error("Error deleting user:", e);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: e.message });
   }
 });
 
@@ -122,16 +142,23 @@ router.post("", async (req, res, next) => {
       team,
     });
   } catch (error) {
-    next(error);
+    console.error("Error deleting user:", error);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 });
 
 // update members
 router.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  const { name, email, roleId } = req.body;
-
   try {
+    const { id } = req.params;
+    console.log(req.body);
+    const {
+      name,
+      email,
+      role: { id: roleId },
+    } = req.body;
     const user = await userRepository.findOne({
       where: { id: parseInt(id) },
     });

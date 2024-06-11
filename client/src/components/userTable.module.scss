@@ -1,0 +1,30 @@
+.root {
+  tr {
+    td:first-child {
+      width: 15px;
+    }
+
+    td {
+      color: #667085;
+      font-size: 14px;
+    }
+  }
+
+  thead {
+    background-color: #f9fafb;
+    th {
+      color: #667085;
+    }
+  }
+
+  &__checkbox {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+
+  &__count {
+    color: #6941c6;
+    background-color: #f9fafb;
+  }
+}

@@ -1,11 +1,17 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import bodyParser from "body-parser";
 import { buildDataSource } from "./db";
+import cors from "cors";
 
-// Start the web service
 const port = process.env.PORT || 5000;
 const app = express();
+
+// Middlewares
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 /* --- Route handlers ---  */
 app.use("/members", require("./controllers/members").default);

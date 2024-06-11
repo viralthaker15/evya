@@ -1,0 +1,107 @@
+.root {
+  &__userTitle {
+    color: #101828;
+  }
+
+  &__userName {
+    &::before {
+      content: "@";
+    }
+  }
+
+  &__activeText {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    &::before {
+      display: inline-block;
+      content: "";
+      -webkit-border-radius: 0.375rem;
+      border-radius: 0.375rem;
+      height: 0.5rem;
+      width: 0.5rem;
+      margin-right: 0.5rem;
+      background-color: #12b76a;
+    }
+    color: #027a48;
+  }
+
+  &__inActiveText {
+    background-color: #fdecec;
+    color: #e25757;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    &::before {
+      display: inline-block;
+      content: "";
+      -webkit-border-radius: 0.375rem;
+      border-radius: 0.375rem;
+      height: 0.5rem;
+      width: 0.5rem;
+      margin-right: 0.5rem;
+      background-color: #b71212cc;
+    }
+  }
+}
+
+:global .checkbox {
+  display: flex;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  input:checked ~ .checkbox__checkmark {
+    background-color: #9747ff;
+    border: none;
+  }
+  input:checked ~ .checkbox__checkmark:after {
+    opacity: 1;
+  }
+
+  &:hover {
+    input ~ .checkbox__checkmark {
+      background-color: #eee;
+    }
+    input:checked ~ .checkbox__checkmark {
+      background-color: #9747ff;
+      border: none;
+    }
+  }
+}
+
+:global .checkbox__checkmark {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  transition: background-color 0.25s ease;
+  border: 0.5px solid gray;
+  border-radius: 4px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+}
