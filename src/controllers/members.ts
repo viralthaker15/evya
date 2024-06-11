@@ -3,6 +3,7 @@ import { dataSource } from "../db";
 import { Role, Team, User, UserTeam } from "../models";
 import { getFormattedUser } from "./utils";
 import { In } from "typeorm";
+import { initializeDatabaseConnection } from "..";
 
 const router = express.Router();
 
@@ -76,6 +77,7 @@ router.get("/roles", async (req, res, next) => {
 // GET member by id
 router.get("/:id", async (req, res, next) => {
   try {
+    await initializeDatabaseConnection();
     const { id } = req.params;
     const queryBuilder = userRepository
       .createQueryBuilder("user")
