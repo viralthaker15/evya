@@ -11,15 +11,15 @@
       "useUnknownInCatchVariables": false,
       "sourceMap": true,
       "outDir": "dist",
-      "rootDir": "./src",
+      "rootDir": "./api",
       "paths": {
-        "src/*": ["./src/*"],
-        "*": ["./node_modules/*", "./src/types/*"]
+        "src/*": ["./api/*"],
+        "*": ["./node_modules/*", "./api/types/*"]
       },
       "forceConsistentCasingInFileNames": true,
       "skipLibCheck": true
     },
-    "include": ["./src", "./client/dist"],
+    "include": ["./api", "./client/dist"],
     "exclude": ["./node_modules"],
   }
   
