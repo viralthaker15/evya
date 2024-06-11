@@ -39,6 +39,18 @@ const UserRow = ({ user }: UserRowProps) => {
     });
   };
 
+  const handleIconMouseOver = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const pathElement = target.querySelector("path");
+    if (pathElement) pathElement.style.stroke = "#9747FF";
+  };
+
+  const handleIconMouseOut = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const pathElement = target.querySelector("path");
+    if (pathElement) pathElement.style.stroke = "#667085";
+  };
+
   return (
     <tr className={`border-b ${styles.root}`}>
       <td className="py-2 px-2">
@@ -91,23 +103,14 @@ const UserRow = ({ user }: UserRowProps) => {
         <EditIcon
           className="mr-2 cursor-pointer"
           onClick={handleEditClick}
-          onMouseOver={(e) => {
-            (e.target as HTMLElement).querySelector("path").style.stroke =
-              "#9747FF";
-          }}
-          onMouseOut={(e) => {
-            e.target.querySelector("path").style.stroke = "#667085";
-          }}
+          onMouseOver={handleIconMouseOver}
+          onMouseOut={handleIconMouseOut}
         />
         <TrashIcon
           className="mr-2 cursor-pointer"
           onClick={handleDeleteClick}
-          onMouseOver={(e) => {
-            e.target.querySelector("path").style.stroke = "#9747FF";
-          }}
-          onMouseOut={(e) => {
-            e.target.querySelector("path").style.stroke = "#667085";
-          }}
+          onMouseOver={handleIconMouseOver}
+          onMouseOut={handleIconMouseOut}
         />
       </td>
     </tr>

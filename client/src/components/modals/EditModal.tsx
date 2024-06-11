@@ -28,7 +28,8 @@ const EditModal = ({ user, onSave, onCancel }: EditFormProps) => {
   }, []);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (selectRef.current && !selectRef.current.contains(event.target)) {
+    const target = event.target as HTMLLIElement;
+    if (selectRef.current && !selectRef.current.contains(target)) {
       handleSelectClick();
     }
   };
@@ -59,8 +60,9 @@ const EditModal = ({ user, onSave, onCancel }: EditFormProps) => {
   };
 
   const handleRoleChange = (e: React.MouseEvent<HTMLLIElement>) => {
+    const target = e.target as HTMLLIElement;
     e.stopPropagation();
-    setRole(e.target?.value || role);
+    setRole(target?.value || role);
     setSelectOpen(false);
   };
 
