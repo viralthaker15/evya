@@ -11,7 +11,7 @@ interface EditFormProps {
   onCancel: () => void;
 }
 
-const EditModal: React.FC<EditFormProps> = ({ user, onSave, onCancel }) => {
+const EditModal = ({ user, onSave, onCancel }: EditFormProps) => {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [role, setRole] = useState<number>(user.role.id);
@@ -123,13 +123,13 @@ const EditModal: React.FC<EditFormProps> = ({ user, onSave, onCancel }) => {
       <div className="flex justify-end gap-3">
         <button
           onClick={onCancel}
-          className="px-4 py-2 border rounded-md flex-1"
+          className="px-4 py-2 border rounded-md flex-1 hover:bg-gray-300"
         >
           Cancel
         </button>
         <button
           onClick={handleSave}
-          className="px-4 py-2 bg-violet-500 text-white rounded-md flex-1"
+          className="px-4 py-2 bg-violet-500 hover:bg-violet-900 text-white rounded-md flex-1 hover:bg-violet-900"
         >
           Confirm
         </button>

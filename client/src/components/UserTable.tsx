@@ -119,7 +119,7 @@ const UserTable: React.FC = () => {
         <button
           className={`${
             selectedUsers.length > 0
-              ? "bg-violet-500 cursor-pointer"
+              ? "bg-violet-500 hover:bg-violet-900 cursor-pointer"
               : "bg-violet-400 cursor-default"
           } text-white px-4 py-2 rounded-lg text-sm font-medium`}
           disabled={selectedUsers.length === 0}

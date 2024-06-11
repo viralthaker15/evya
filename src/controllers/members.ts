@@ -154,7 +154,6 @@ router.post("", async (req, res, next) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.body);
     const {
       name,
       email,

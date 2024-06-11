@@ -1,5 +1,6 @@
 import { Team } from "../models/Team";
 import styles from "./teamTag.module.scss";
+import Tooltip from "./Tooltip";
 
 type PropTypes = {
   teams: Team[];
@@ -7,6 +8,8 @@ type PropTypes = {
 };
 
 const TeamTag = ({ teams, maxTagsToShow = 4 }: PropTypes) => {
+  const showTooltip = teams.length - maxTagsToShow > 0;
+
   return (
     <div className={`${styles.root}`}>
       {teams.slice(0, maxTagsToShow).map((team, idx) => (
@@ -19,12 +22,20 @@ const TeamTag = ({ teams, maxTagsToShow = 4 }: PropTypes) => {
           {team.name}
         </span>
       ))}
-      {teams.length - maxTagsToShow > 0 ? (
-        <span
-          className={`px-2 py-0.5 pb-1 rounded-xl mr-1 text-xs font-medium text-center`}
+      {showTooltip ? (
+        <Tooltip
+          content={teams.slice(maxTagsToShow).map((tag, index) => (
+            <div key={index} className="p-1">
+              {tag.name}
+            </div>
+          ))}
         >
-          {`+${teams.length - maxTagsToShow}`}
-        </span>
+          <span
+            className={`px-2 py-0.5 pb-1 rounded-xl mr-1 text-xs font-medium text-center`}
+          >
+            {`+${teams.length - maxTagsToShow}`}
+          </span>
+        </Tooltip>
       ) : null}
     </div>
   );

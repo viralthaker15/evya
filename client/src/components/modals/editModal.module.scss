@@ -1,4 +1,11 @@
 .root {
+  input {
+    &:focus {
+      outline: none;
+      border: 1px solid #9747ff !important;
+    }
+  }
+
   &__select {
     position: relative;
     appearance: none;
@@ -18,6 +25,8 @@
   }
 
   &__selectOpen {
+    outline: none;
+    border: 1px solid #9747ff !important;
     background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 6.5L6 1.5L1 6.5' stroke='%23667085' stroke-width='1.66667' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A") !important;
 
     li {

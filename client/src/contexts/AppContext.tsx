@@ -52,9 +52,7 @@ export const AppContext = createContext<AppContextState>({
   },
 });
 
-export const AppProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [modalSettings, setModalSettings] = useState<ModalSettings>({
     open: false,

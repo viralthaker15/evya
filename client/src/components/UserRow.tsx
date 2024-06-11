@@ -7,12 +7,13 @@ import TeamTag from "./TeamTag";
 /// <reference types="vite-plugin-svgr/client" />
 import EditIcon from "../assets/edit.svg?react";
 import TrashIcon from "../assets/bin.svg?react";
+import DefaultAvatar from "./DefaultAvatar";
 
 interface UserRowProps {
   user: User;
 }
 
-const UserRow: React.FC<UserRowProps> = ({ user }) => {
+const UserRow = ({ user }: UserRowProps) => {
   const { selectedUsers, toggleUserSelection, handleChangeModalSettings } =
     useContext(AppContext);
 
@@ -52,11 +53,15 @@ const UserRow: React.FC<UserRowProps> = ({ user }) => {
         </label>
       </td>
       <td className="py-2 px-2 flex items-center">
-        <img
-          src={user.avatar}
-          alt={user.name}
-          className="w-10 h-10 rounded-full mr-2"
-        />
+        {user.avatar ? (
+          <img
+            src={user.avatar}
+            alt={user.name}
+            className="w-10 h-10 rounded-full mr-2"
+          />
+        ) : (
+          <DefaultAvatar name={user.name} />
+        )}
         <div className="flex flex-col">
           <span className={`font-medium ${styles.root__userTitle}`}>
             {user.name}
@@ -83,10 +88,26 @@ const UserRow: React.FC<UserRowProps> = ({ user }) => {
         {user.teams.length > 0 ? <TeamTag teams={user.teams} /> : "-"}
       </td>
       <td className="py-2 px-2 flex items-center">
-        <EditIcon className="mr-2 cursor-pointer" onClick={handleEditClick} />
+        <EditIcon
+          className="mr-2 cursor-pointer"
+          onClick={handleEditClick}
+          onMouseOver={(e) => {
+            (e.target as HTMLElement).querySelector("path").style.stroke =
+              "#9747FF";
+          }}
+          onMouseOut={(e) => {
+            e.target.querySelector("path").style.stroke = "#667085";
+          }}
+        />
         <TrashIcon
           className="mr-2 cursor-pointer"
           onClick={handleDeleteClick}
+          onMouseOver={(e) => {
+            e.target.querySelector("path").style.stroke = "#9747FF";
+          }}
+          onMouseOut={(e) => {
+            e.target.querySelector("path").style.stroke = "#667085";
+          }}
         />
       </td>
     </tr>

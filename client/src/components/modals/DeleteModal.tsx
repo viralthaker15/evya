@@ -7,7 +7,7 @@ interface DeleteProps {
   onCancel: () => void;
 }
 
-const DeleteModal: React.FC<DeleteProps> = ({ users, onSave, onCancel }) => {
+const DeleteModal = ({ users, onSave, onCancel }: DeleteProps) => {
   const {
     modalSettings: { userMetaData },
   } = useContext(AppContext);
@@ -26,13 +26,13 @@ const DeleteModal: React.FC<DeleteProps> = ({ users, onSave, onCancel }) => {
       <div className="flex justify-end gap-3">
         <button
           onClick={onCancel}
-          className="px-4 py-2 border rounded-md flex-1"
+          className="px-4 py-2 border rounded-md flex-1 hover:bg-gray-300"
         >
           Cancel
         </button>
         <button
           onClick={handleSave}
-          className="px-4 py-2 bg-violet-500 text-white rounded-md flex-1"
+          className="px-4 py-2 bg-violet-500 hover:bg-violet-900 text-white rounded-md flex-1"
         >
           Confirm
         </button>
