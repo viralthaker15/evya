@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "module": "CommonJS",
+      "esModuleInterop": true,
+      "target": "es2021",
+      "lib": ["es2021", "DOM.Iterable"],
+      "noImplicitAny": true,
+      "moduleResolution": "node",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "useUnknownInCatchVariables": false,
+      "sourceMap": true,
+      "outDir": "dist",
+      "paths": {
+        "src/*": ["./src/*"],
+        "*": ["./node_modules/*", "./src/types/*"]
+      },
+      "forceConsistentCasingInFileNames": true
+    },
+  }
+  
