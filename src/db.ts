@@ -8,7 +8,7 @@ const settings: { [env: string]: PostgresConnectionOptions } = {
   production: {
     name: "default",
     type: "postgres",
-    url: "postgres://postgres.jvvlgkcdnplwhfbtugkp:Eyva*Postgres@aws-0-ap-south-1.pooler.supabase.com:6543/postgres",
+    url: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
     entities,
     logging: ["error"],
@@ -16,7 +16,7 @@ const settings: { [env: string]: PostgresConnectionOptions } = {
   development: {
     name: "default",
     type: "postgres",
-    url: "postgres://postgres.jvvlgkcdnplwhfbtugkp:Eyva*Postgres@aws-0-ap-south-1.pooler.supabase.com:6543/postgres",
+    url: process.env.DATABASE_URL,
     entities,
     synchronize: true, // it should not be used in prod
   },

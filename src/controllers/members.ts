@@ -4,6 +4,7 @@ import { Role, Team, User, UserTeam } from "../models";
 import { getFormattedUser } from "./utils";
 import { In } from "typeorm";
 import { initializeDatabaseConnection } from "..";
+import { connectDB } from "src/middleware";
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ const userTeamRepository = dataSource.getRepository(UserTeam);
 const roleRepository = dataSource.getRepository(Role);
 
 /* === Routes === */
-router.get("", async (req, res, next) => {
+router.get("", connectDB, async (req, res, next) => {
   try {
     // Pagination
     const page = parseInt(req.query.page as string) || 1;
@@ -75,10 +76,12 @@ router.get("/roles", async (req, res, next) => {
 });
 
 // GET member by id
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", connectDB, async (req, res, next) => {
   try {
-    if (process.env.NODE_ENV === "production")
+    if (process.env.NODE_ENV === "production") {
+      /* === Deployed on vercel (serverless function connection is not always to db) */
       await initializeDatabaseConnection();
+    }
     const { id } = req.params;
     const queryBuilder = userRepository
       .createQueryBuilder("user")
