@@ -4,6 +4,7 @@ import { Role, Team, User, UserTeam } from "../models";
 import { getFormattedUser } from "./utils";
 import { In } from "typeorm";
 import { initializeDatabaseConnection } from "..";
+import { checkDBConnection } from "src/middleware";
 
 const router = express.Router();
 
@@ -14,12 +15,8 @@ const userTeamRepository = dataSource.getRepository(UserTeam);
 const roleRepository = dataSource.getRepository(Role);
 
 /* === Routes === */
-router.get("", async (req, res, next) => {
+router.get("", checkDBConnection, async (req, res) => {
   try {
-    if (process.env.NODE_ENV === "production") {
-      /* === Deployed on vercel (serverless function connection is not always to) */
-      await initializeDatabaseConnection();
-    }
     // Pagination
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
@@ -66,7 +63,7 @@ router.get("", async (req, res, next) => {
 });
 
 // get All Roles
-router.get("/roles", async (req, res, next) => {
+router.get("/roles", async (req, res) => {
   try {
     if (process.env.NODE_ENV === "production") {
       /* === Deployed on vercel (serverless function connection is not always to) */
@@ -83,7 +80,7 @@ router.get("/roles", async (req, res, next) => {
 });
 
 // GET member by id
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", async (req, res) => {
   try {
     if (process.env.NODE_ENV === "production") {
       /* === Deployed on vercel (serverless function connection is not always to) */
@@ -114,7 +111,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // add members
-router.post("", async (req, res, next) => {
+router.post("", async (req, res) => {
   try {
     if (process.env.NODE_ENV === "production") {
       /* === Deployed on vercel (serverless function connection is not always to) */

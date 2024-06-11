@@ -1,10 +1,15 @@
 import { initializeDatabaseConnection } from ".";
 
-export const connectDB = (req, res, next) => {
-  if (process.env.NODE_ENV === "production") {
-    /* === Deployed on vercel (serverless function connection is not always to db) */
-    await initializeDatabaseConnection();
+/* @ts-ignore */
+export const checkDBConnection = async (req, res, next) => {
+  try {
+    if (process.env.NODE_ENV === "production") {
+      /* === Deployed on vercel (serverless function connection is not always to) */
+      await initializeDatabaseConnection();
+    }
+  } catch (e) {
+    console.error("Error: ", e);
+  } finally {
     next();
   }
-  next();
 };
