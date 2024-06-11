@@ -1,3 +1,4 @@
-export { UserTeam } from "./userTeam";
-export { User } from "./user";
-export { Team } from "./team";
+export { UserTeam } from "./UserTeam";
+export { User } from "./User";
+export { Team } from "./Team";
+export { Role } from "./Role";

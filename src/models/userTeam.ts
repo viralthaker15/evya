@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn, ManyToOne } from "typeorm";
-import { User } from "./user";
-import { Team } from "./team";
+import { User } from "./User";
+import { Team } from "./Team";
 
 // JUNCTION TABLE
 @Entity({ name: "user_team" })

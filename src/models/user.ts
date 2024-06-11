@@ -1,5 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { UserTeam } from "./userTeam";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  JoinColumn,
+  ManyToOne,
+} from "typeorm";
+import { UserTeam } from "./UserTeam";
+import { Role } from "./Role";
 
 @Entity()
 export class User {
@@ -18,12 +26,19 @@ export class User {
   @Column()
   isActive: boolean;
 
-  @Column()
-  role: string;
-
   @Column({ unique: true })
   email: string;
 
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  createdAt: Date;
+
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  updatedAt: Date;
+
   @OneToMany(() => UserTeam, (userTeam) => userTeam.user)
   teams: UserTeam[];
+
+  @ManyToOne(() => Role, (role) => role.user)
+  @JoinColumn({ name: "roleId" })
+  role: Role;
 }
