@@ -164,11 +164,13 @@ const UserTable: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <TableFooter
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      {users.length > 0 ? (
+        <TableFooter
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      ) : null}
       <Modal
         isOpen={open}
         onClose={() => handleChangeModalSettings({ open: false })}
