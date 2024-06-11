@@ -77,7 +77,8 @@ router.get("/roles", async (req, res, next) => {
 // GET member by id
 router.get("/:id", async (req, res, next) => {
   try {
-    await initializeDatabaseConnection();
+    if (process.env.NODE_ENV === "production")
+      await initializeDatabaseConnection();
     const { id } = req.params;
     const queryBuilder = userRepository
       .createQueryBuilder("user")

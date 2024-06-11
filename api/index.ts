@@ -1,5 +1,3 @@
-import app, { initializeDatabaseConnection } from "../src/index";
-
-initializeDatabaseConnection();
+import app from "../src/index";
 
 export default app;
